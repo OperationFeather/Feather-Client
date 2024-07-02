@@ -1,4 +1,4 @@
-print("feather esp v1.101")
+print("feather esp v1.222")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local localPlayer = Players.LocalPlayer
@@ -59,7 +59,13 @@ local ESP_SETTINGS = {
 	SkeletonsColor = Color3.new(1, 1, 1),
 	TracerPosition = "Bottom",
 }
-
+local function create(class, properties)
+	local drawing = Drawing.new(class)
+	for property, value in pairs(properties) do
+		drawing[property] = value
+	end
+	return drawing
+end
 local function createEsp(player)
 	local esp = {
 		tracer = create("Line", {
