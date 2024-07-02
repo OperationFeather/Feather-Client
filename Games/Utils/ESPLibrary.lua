@@ -4,7 +4,7 @@ local localPlayer = Players.LocalPlayer
 local camera = workspace.CurrentCamera
 local cache = {}
 
-local bones = {
+local R15_BONES = {
     {"Head", "UpperTorso"},
     {"UpperTorso", "RightUpperArm"},
     {"RightUpperArm", "RightLowerArm"},
@@ -20,6 +20,19 @@ local bones = {
     {"RightUpperLeg", "RightLowerLeg"},
     {"RightLowerLeg", "RightFoot"}
 }
+
+local R6_BONES = {
+    {"Head", "Torso"},
+    {"Torso", "Right Arm"},
+    {"Right Arm", "Right Arm"},
+    {"Torso", "Left Arm"},
+    {"Left Arm", "Left Arm"},
+    {"Torso", "Left Leg"},
+    {"Left Leg", "Left Leg"},
+    {"Torso", "Right Leg"},
+    {"Right Leg", "Right Leg"}
+}
+
 
 --// Settings
 local ESP_SETTINGS = {
