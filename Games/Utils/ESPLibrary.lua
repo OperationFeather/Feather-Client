@@ -59,14 +59,6 @@ local ESP_SETTINGS = {
     TracerPosition = "Bottom",
 }
 
-local function create(class, properties)
-    local drawing = Drawing.new(class)
-    for property, value in pairs(properties) do
-        drawing[property] = value
-    end
-    return drawing
-end
-
 local function createEsp(player)
     local esp = {
         tracer = create("Line", {
@@ -103,16 +95,33 @@ local function createEsp(player)
             Outline = true,
             Center = true
         }),
-        tracer = create("Line", {
-            Thickness = ESP_SETTINGS.TracerThickness,
-            Color = ESP_SETTINGS.TracerColor,
-            Transparency = 1
-        }),
         boxLines = {},
+        skeletonlines = {}
     }
 
     cache[player] = esp
-    cache[player]["skeletonlines"] = {}
+
+    local function setupSkeletonLines(bones)
+        for _, bonePair in ipairs(bones) do
+            local parentBone, childBone = bonePair[1], bonePair[2]
+
+            if player.Character and player.Character:FindFirstChild(parentBone) and player.Character:FindFirstChild(childBone) then
+                local skeletonLine = create("Line", {
+                    Thickness = 1,
+                    Color = ESP_SETTINGS.SkeletonsColor,
+                    Transparency = 1
+                })
+                table.insert(esp.skeletonlines, {skeletonLine, parentBone, childBone})
+            end
+        end
+    end
+
+    -- Check if the character is R15 or R6
+    if player.Character and player.Character:FindFirstChild("UpperTorso") then
+        setupSkeletonLines(R15_BONES)
+    elseif player.Character and player.Character:FindFirstChild("Torso") then
+        setupSkeletonLines(R6_BONES)
+    end
 end
 
 local function isPlayerBehindWall(player)
