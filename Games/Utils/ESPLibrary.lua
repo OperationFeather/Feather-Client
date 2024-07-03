@@ -126,11 +126,15 @@ local function removeEsp(player)
     if not esp then return end
 
     for _, drawing in pairs(esp) do
-        drawing:Remove()
+        local success, err = pcall(function() drawing:Remove() end)
+        if not success then
+            warn("Failed to remove drawing for player:", player, err)
+        end
     end
 
     cache[player] = nil
 end
+
 
 local function updateEsp()
     for player, esp in pairs(cache) do
