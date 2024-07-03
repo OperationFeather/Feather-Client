@@ -331,7 +331,7 @@ local function updateEsp()
 
                     if ESP_SETTINGS.ShowTracer and ESP_SETTINGS.Enabled then
                         local tracerY
-                        esp.Tracer.Color = ESP_SETTINGS.TracerColor
+                        esp.tracer.Color = ESP_SETTINGS.TracerColor
                         if ESP_SETTINGS.TracerPosition == "Top" then
                             tracerY = 0
                         elseif ESP_SETTINGS.TracerPosition == "Middle" then
