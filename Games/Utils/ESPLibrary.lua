@@ -126,9 +126,20 @@ local function removeEsp(player)
     if not esp then return end
 
     for _, drawing in pairs(esp) do
-        local success, err = pcall(function() drawing:Remove() end)
-        if not success then
-            warn("Failed to remove drawing for player:", player, err)
+        if type(drawing) == "table" and drawing.Remove then
+            local success, err = pcall(function() drawing:Remove() end)
+            if not success then
+                warn("Failed to remove drawing for player:", player, err)
+            end
+        elseif type(drawing) == "table" then
+            for _, subDrawing in pairs(drawing) do
+                if subDrawing.Remove then
+                    local success, err = pcall(function() subDrawing:Remove() end)
+                    if not success then
+                        warn("Failed to remove sub-drawing for player:", player, err)
+                    end
+                end
+            end
         end
     end
 
