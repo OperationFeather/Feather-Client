@@ -1,5 +1,5 @@
--- esp.luagjdfgj333
---// Variables26
+-- esp.luagjdfgj
+--// Variables26fffff
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local localPlayer = Players.LocalPlayer
@@ -272,14 +272,16 @@ local function updateEsp()
 						end
 					else
 						print("heres where error occurs m?")
-						for _, line in ipairs(esp.boxLines) do
+						for index, line in ipairs(esp.boxLines) do
 							if type(line) == "table" then
-								-- If the line is a table (possibly from Corner Box Esp), remove each Line object in the table
+								-- If the line is a table (possibly from Corner Box Esp), print and remove each Line object in the table
+								print("Removing lines from table at index", index)
 								for _, subline in ipairs(line) do
 									subline:Remove()
 								end
 							elseif line.Remove then
-								-- Otherwise, directly remove the drawing object
+								-- Otherwise, directly remove the drawing object and print that
+								print("Removing line at index", index)
 								line:Remove()
 							end
 						end
@@ -385,22 +387,28 @@ local function updateEsp()
 					esp["skeletonlines"] = {}
 
 					-- Check if ESP_SETTINGS.BoxType is "Corner Box Esp"
-					for _, line in ipairs(esp.boxLines) do
+					for index, line in ipairs(esp.boxLines) do
 						if type(line) == "table" then
-							-- If the line is a table (possibly from Corner Box Esp), remove each Line object in the table
+							-- If the line is a table (possibly from Corner Box Esp), print and remove each Line object in the table
+							print("Removing lines from table at index", index)
 							for _, subline in ipairs(line) do
 								subline:Remove()
 							end
 						elseif line.Remove then
-							-- Otherwise, directly remove the drawing object
+							-- Otherwise, directly remove the drawing object and print that
+							print("Removing line at index", index)
 							line:Remove()
 						end
+					end
+					
+					esp.boxLines = {}  -- Clear the table
+
 					end
 				end
 			end
 		end
 	end
-end
+
 for _, player in ipairs(Players:GetPlayers()) do
 	if player ~= localPlayer then
 		createEsp(player)
