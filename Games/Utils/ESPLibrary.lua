@@ -1,4 +1,4 @@
--- esp.luagjdfgj
+-- esp.luagjdfgj333
 --// Variables26
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -147,7 +147,7 @@ local function removeEsp(player)
 
 	cache[player] = nil
 end
- 
+
 
 local function updateEsp()
 	for player, esp in pairs(cache) do
@@ -274,19 +274,13 @@ local function updateEsp()
 						print("heres where error occurs m?")
 						for _, line in ipairs(esp.boxLines) do
 							if type(line) == "table" then
-								-- If the line is a table (possibly from Corner Box Esp), remove the Line object
-								if line.Remove then
-									local success, err = pcall(function() line:Remove() end)
-									if not success then
-										warn("Failed to remove line:", err)
-									end
+								-- If the line is a table (possibly from Corner Box Esp), remove each Line object in the table
+								for _, subline in ipairs(line) do
+									subline:Remove()
 								end
 							elseif line.Remove then
 								-- Otherwise, directly remove the drawing object
-								local success, err = pcall(function() line:Remove() end)
-								if not success then
-									warn("Failed to remove drawing:", err)
-								end
+								line:Remove()
 							end
 						end
 						esp.boxLines = {}  -- Clear the table
@@ -391,38 +385,37 @@ local function updateEsp()
 					esp["skeletonlines"] = {}
 
 					-- Check if ESP_SETTINGS.BoxType is "Corner Box Esp"
-					if ESP_SETTINGS.BoxType == "Corner Box Esp" then
-						for _, lineData in ipairs(esp.boxLines) do
-							local line = lineData
+					for _, line in ipairs(esp.boxLines) do
+						if type(line) == "table" then
+							-- If the line is a table (possibly from Corner Box Esp), remove each Line object in the table
+							for _, subline in ipairs(line) do
+								subline:Remove()
+							end
+						elseif line.Remove then
+							-- Otherwise, directly remove the drawing object
 							line:Remove()
 						end
-						esp.boxLines = {}
-					else
-						for _, line in ipairs(esp.boxLines) do
-							line:Remove()
-						end
-						esp.boxLines = {}
 					end
 				end
 			end
 		end
 	end
 end
-				for _, player in ipairs(Players:GetPlayers()) do
-					if player ~= localPlayer then
-						createEsp(player)
-					end
-				end
+for _, player in ipairs(Players:GetPlayers()) do
+	if player ~= localPlayer then
+		createEsp(player)
+	end
+end
 
-				Players.PlayerAdded:Connect(function(player)
-					if player ~= localPlayer then
-						createEsp(player)
-					end
-				end)
+Players.PlayerAdded:Connect(function(player)
+	if player ~= localPlayer then
+		createEsp(player)
+	end
+end)
 
-				Players.PlayerRemoving:Connect(function(player)
-					removeEsp(player)
-				end)
+Players.PlayerRemoving:Connect(function(player)
+	removeEsp(player)
+end)
 
-				RunService.RenderStepped:Connect(updateEsp)
-				return ESP_SETTINGS
+RunService.RenderStepped:Connect(updateEsp)
+return ESP_SETTINGS
