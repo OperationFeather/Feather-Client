@@ -1,5 +1,5 @@
--- esp.lua
---// Variables1
+-- esp.lua1111
+--// Variables
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local localPlayer = Players.LocalPlayer
@@ -269,8 +269,23 @@ local function updateEsp()
                             esp.boxOutline.Visible = false
                         end
                     else
+                        print("heres where error occurs m?")
                         for _, line in ipairs(esp.boxLines) do
-                            line:Remove()
+                            if type(line) == "table" then
+                                -- If the line is a table (possibly from Corner Box Esp), remove the Line object
+                                if line.Remove then
+                                    local success, err = pcall(function() line:Remove() end)
+                                    if not success then
+                                        warn("Failed to remove line:", err)
+                                    end
+                                end
+                            elseif line.Remove then
+                                -- Otherwise, directly remove the drawing object
+                                local success, err = pcall(function() line:Remove() end)
+                                if not success then
+                                    warn("Failed to remove drawing:", err)
+                                end
+                            end
                         end
                         esp.boxLines = {}  -- Clear the table
                         esp.box.Visible = false
