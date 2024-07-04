@@ -1,4 +1,4 @@
--- esp.lua1111
+-- esp.lua
 --// Variables
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -344,12 +344,14 @@ local function updateEsp()
                                 skeletonLine.Color = ESP_SETTINGS.SkeletonsColor
                                 skeletonLine.Visible = true
                             else
+                                print("eeerror here at skele1")
                                 skeletonLine:Remove()
                             end
                         end
                     else
                         for _, lineData in ipairs(esp["skeletonlines"]) do
                             local skeletonLine = lineData[1]
+                            print("error here at skele2?")
                             skeletonLine:Remove()
                         end
                         esp["skeletonlines"] = {}
@@ -381,10 +383,12 @@ local function updateEsp()
                     end
                     for _, lineData in ipairs(esp["skeletonlines"]) do
                         local skeletonLine = lineData[1]
+                        print("skele 3")
                         skeletonLine:Remove()
                     end
                     esp["skeletonlines"] = {}
                     for _, line in ipairs(esp.boxLines) do
+                        print("Hi!")
                         line:Remove()
                     end
                     esp.boxLines = {}
@@ -395,10 +399,12 @@ local function updateEsp()
                 end
                 for _, lineData in ipairs(esp["skeletonlines"]) do
                     local skeletonLine = lineData[1]
+                    print("Heey!")
                     skeletonLine:Remove()
                 end
                 esp["skeletonlines"] = {}
                 for _, line in ipairs(esp.boxLines) do
+                    print("Bada bom")
                     line:Remove()
                 end
                 esp.boxLines = {}
@@ -409,10 +415,12 @@ local function updateEsp()
             end
             for _, lineData in ipairs(esp["skeletonlines"]) do
                 local skeletonLine = lineData[1]
+                print("Yo!")
                 skeletonLine:Remove()
             end
             esp["skeletonlines"] = {}
             for _, line in ipairs(esp.boxLines) do
+                print("Hay!")
                 line:Remove()
             end
             esp.boxLines = {}
