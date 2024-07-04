@@ -1,5 +1,5 @@
 -- esp.lua
---// Variables
+--// Variables1
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local localPlayer = Players.LocalPlayer
@@ -269,12 +269,12 @@ local function updateEsp()
                             esp.boxOutline.Visible = false
                         end
                     else
-                        esp.box.Visible = false
-                        esp.boxOutline.Visible = false
                         for _, line in ipairs(esp.boxLines) do
                             line:Remove()
                         end
-                        esp.boxLines = {}
+                        esp.boxLines = {}  -- Clear the table
+                        esp.box.Visible = false
+                        esp.boxOutline.Visible = false
                     end
 
                     if ESP_SETTINGS.ShowHealth and ESP_SETTINGS.Enabled then
