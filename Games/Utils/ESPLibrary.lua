@@ -1,5 +1,5 @@
--- esp.lua
---// Variables2
+-- esp.luagjdfgj
+--// Variables26
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local localPlayer = Players.LocalPlayer
@@ -126,17 +126,19 @@ local function removeEsp(player)
 	if not esp then return end
 
 	for _, drawing in pairs(esp) do
-		if type(drawing) == "table" and drawing.Remove then
-			local success, err = pcall(function() drawing:Remove() end)
-			if not success then
-				warn("Failed to remove drawing for player:", player, err)
-			end
-		elseif type(drawing) == "table" then
-			for _, subDrawing in pairs(drawing) do
-				if subDrawing.Remove then
-					local success, err = pcall(function() subDrawing:Remove() end)
-					if not success then
-						warn("Failed to remove sub-drawing for player:", player, err)
+		if type(drawing) == "table" then
+			if drawing.Remove then
+				local success, err = pcall(function() drawing:Remove() end)
+				if not success then
+					warn("Failed to remove drawing for player:", player, err)
+				end
+			else
+				for _, subDrawing in pairs(drawing) do
+					if subDrawing.Remove then
+						local success, err = pcall(function() subDrawing:Remove() end)
+						if not success then
+							warn("Failed to remove sub-drawing for player:", player, err)
+						end
 					end
 				end
 			end
@@ -145,7 +147,7 @@ local function removeEsp(player)
 
 	cache[player] = nil
 end
-end
+ 
 
 local function updateEsp()
 	for player, esp in pairs(cache) do
@@ -348,6 +350,7 @@ local function updateEsp()
 								skeletonLine:Remove()
 							end
 						end
+
 					else
 						for _, lineData in ipairs(esp["skeletonlines"]) do
 							local skeletonLine = lineData[1]
@@ -401,8 +404,10 @@ local function updateEsp()
 						esp.boxLines = {}
 					end
 				end
+			end
+		end
+	end
 end
-
 				for _, player in ipairs(Players:GetPlayers()) do
 					if player ~= localPlayer then
 						createEsp(player)
